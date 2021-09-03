@@ -1,0 +1,15 @@
+1. Erro de versão node
+  error nome-do-meu-app@1.0.0: The engine "node" is incompatible with this module. Expected version "12.x". Got "10.16.3"
+
+2. Instalando NVM(node version manager)
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+3. instalando versão 12* node e alterando current
+  nvm install 12.*
+  nvm use v12.22.6
+
+4. yarn build
+5. yarn dev
+  
+
+
