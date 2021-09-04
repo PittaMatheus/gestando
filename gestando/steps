@@ -8,8 +8,8 @@
   nvm install 12.*
   nvm use v12.22.6
 
-4. yarn build
-5. yarn dev
-  
+4. Adicionando lib de rotas
+  yarn add react-router-dom
+  yarn add @types/react-router-dom
 
 
