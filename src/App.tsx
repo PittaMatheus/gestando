@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import GlobalStyles from './styles/GlobalStyles';
 import Routes from "./components/rotas"
 
 function App() {
@@ -17,11 +18,15 @@ function App() {
   // }, [url]);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    // <div className="App">
+    //   <header className="App-header">
+    <>
+      <GlobalStyles />
+        <h1>Ola mundo</h1>
         <Routes />
-      </header>
-    </div>
+    </>
+    //   </header>
+    // </div>
   );
 }
 
