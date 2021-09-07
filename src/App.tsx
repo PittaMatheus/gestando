@@ -3,7 +3,9 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Routes from "./components/rotas"
 
-import Home from "./pages/home"
+import Home from "./pages/home";
+import List from "./pages/List";
+
 import Layout from './components/Layout'
 import dark from './styles/themes/dark'
 import light from './styles/themes/light'
@@ -13,7 +15,7 @@ function App() {
     <ThemeProvider theme={dark}>
       <GlobalStyles />
       <Layout>
-        <Home />
+        <List />
       </Layout>
     </ThemeProvider>
   );
