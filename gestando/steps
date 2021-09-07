@@ -15,3 +15,6 @@
 5 Adicionando lib styled components
   yarn add styled-components
   yarn add @types/styled-components -D  // Apenas ambiente de desenvolvimento
+
+6 Adicionando lib react-switch
+  yarn add react-switch
