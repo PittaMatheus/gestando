@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { Container } from './styles';
+import { Container, Content } from './styles';
 import ContentHeader from '../../components/contentHeader';
 import SelectInput from '../../components/SelectInput';
+import HistoryCard from '../../components/HistoryCard';
+
 
 
 const List: React.FC = () => {
-  
+
   const options = [
     { value: "Matheus", label: "Matheus" },
-    { value: "Luciana", label: "Luciana" }
+    { value: "Matheus 01", label: "Matheus 01" }
   ];
 
   return (
@@ -17,6 +19,49 @@ const List: React.FC = () => {
       <ContentHeader title="Lista" lineColor="#E44C4E" >
         <SelectInput options={options} />
       </ContentHeader>
+
+
+      <Content>
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="Titulo"
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+
+
+        />
+
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="Titulo"
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+
+
+        />
+
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="Titulo"
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+
+
+        />
+
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="Titulo"
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+
+
+        />
+      </Content>
     </Container>
   )
 }

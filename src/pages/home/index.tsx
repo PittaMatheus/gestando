@@ -9,7 +9,7 @@ import { Container } from './style';
 
 const options = [
   { value: "Matheus", label: "Matheus" },
-  { value: "Luciana", label: "Luciana" }
+  { value: "Matheus 01", label: "Matheus 01" }
 ]
 
 const Home: React.FC = () => {
