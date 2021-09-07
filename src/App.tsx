@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Routes from "./components/rotas"
+
+import Layout from './components/Layout'
+import dark from './styles/themes/dark'
+import light from './styles/themes/light'
 
 function App() {
   // const [users, setUsers] = useState([]);
@@ -18,15 +23,11 @@ function App() {
   // }, [url]);
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    <>
+    <ThemeProvider theme={dark}>
       <GlobalStyles />
-        <h1>Ola mundo</h1>
-        <Routes />
-    </>
-    //   </header>
-    // </div>
+      <Layout>
+      </Layout>
+    </ThemeProvider>
   );
 }
 
