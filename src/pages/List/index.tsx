@@ -25,41 +25,93 @@ const List: React.FC = () => {
         <HistoryCard
           cardColor="#313862"
           tagColor="#E44C4E"
-          title="Titulo"
+          title="Titulo 1"
           amount="R$ 100,00"
           subtitle="07/09/2021"
+        />
 
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="Titulo 2"
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
 
         />
 
         <HistoryCard
           cardColor="#313862"
           tagColor="#E44C4E"
-          title="Titulo"
+          title="Titulo 3"
           amount="R$ 100,00"
           subtitle="07/09/2021"
-
 
         />
 
         <HistoryCard
           cardColor="#313862"
           tagColor="#E44C4E"
-          title="Titulo"
+          title="Titulo 4 "
           amount="R$ 100,00"
           subtitle="07/09/2021"
-
 
         />
 
         <HistoryCard
           cardColor="#313862"
           tagColor="#E44C4E"
-          title="Titulo"
+          title="João Pedro "
           amount="R$ 100,00"
           subtitle="07/09/2021"
-
-
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
+        />
+        <HistoryCard
+          cardColor="#313862"
+          tagColor="#E44C4E"
+          title="João Pedro "
+          amount="R$ 100,00"
+          subtitle="07/09/2021"
         />
       </Content>
     </Container>
