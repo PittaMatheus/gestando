@@ -1,13 +1,16 @@
 import React from 'react';
 
+import ContentHeader from '../../components/contentHeader';
+
+import { Container } from './style';
+
+
+
 const Home: React.FC = () => {
   return (
-    <div className="Home">
-      <header className="Home-header">
-       
-        <p>HOME</p>
-      </header>
-    </div>
+    <Container>
+      <ContentHeader />
+    </Container>
   );
 }
 
