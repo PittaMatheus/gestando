@@ -3,10 +3,11 @@ import React from "react";
 import { Container, Tag } from './styles'
 
 interface IHistoryFinanceCardProps {
+  id: number;
   tagColor: string;
   title: string;
-  subtitle: string;
-  amount: string;
+  subtitle: Date;
+  amount: number;
 
 }
 

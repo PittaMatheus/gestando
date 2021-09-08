@@ -21,3 +21,6 @@
 
 7 Adicionando lib react icons
   yarn add react-icons
+
+8. Adicionando lib axios
+  yarn add axios

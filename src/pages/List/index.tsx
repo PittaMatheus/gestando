@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+
+import Axios from 'axios'
 
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/contentHeader';
@@ -13,19 +15,49 @@ interface IRouteParams {
   }
 }
 
+
+interface Idata {
+  createdAt: Date,
+  updatedAt: Date | null,
+  status: string,
+  id: number,
+  metadatas: {
+    name: string,
+    digits: number,
+    limit: number
+  }
+}
+
 const List: React.FC<IRouteParams> = ({ match }) => {
+
+  const [data, setData] = useState<Idata[]>();
+
+  useEffect(() => {
+    getCards()
+  }, []);
+
+  const getCards = () => {
+    Axios.get("http://localhost:3001/api/cards")
+      .then(res => {
+        if (res.data) {
+          let data = res.data;
+          setData(data)
+        }
+
+      })
+  }
 
   const { type } = match.params;
   const params = useMemo(() => {
-    return type === 'cards' ? 
-    {
-      title:'Cartões', 
-      lineColor: '#F7943B'
-    }
-    : { 
-      title: 'Saídas',
-      lineColor: '#E44C4E'
-    }
+    return type === 'cards' ?
+      {
+        title: 'Cartões',
+        lineColor: '#F7943B'
+      }
+      : {
+        title: 'Saídas',
+        lineColor: '#E44C4E'
+      }
 
   }, [type]);
 
@@ -70,85 +102,17 @@ const List: React.FC<IRouteParams> = ({ match }) => {
 
 
       <Content>
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="Titulo 1"
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
 
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="Titulo 2"
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-
-        />
-
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="Titulo 3"
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-
-        />
-
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="Titulo 4 "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-
-        />
-
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
-        <HistoryCard
-          tagColor="#E44C4E"
-          title="João Pedro "
-          amount="R$ 100,00"
-          subtitle="07/09/2021"
-        />
+        {data && data.map(item => (
+          <HistoryCard
+            id={item.id}
+            tagColor="#E44C4E"
+            title={item.metadatas.name}
+            amount={item.metadatas.limit}
+            subtitle={item.createdAt}
+          />
+        ))
+        }
       </Content>
     </Container>
   )
