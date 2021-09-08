@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/contentHeader';
 import SelectInput from '../../components/SelectInput';
 import HistoryCard from '../../components/HistoryCard';
 
+interface IRouteParams {
+  match: {
+    params: {
+      type: string;
+    }
+  }
+}
 
+const List: React.FC<IRouteParams> = ({ match }) => {
 
-const List: React.FC = () => {
+  const { type } = match.params;
+  const params = useMemo(() => {
+    return type === 'cards' ? 
+    {
+      title:'Cartões', 
+      lineColor: '#F7943B'
+    }
+    : { 
+      title: 'Saídas',
+      lineColor: '#E44C4E'
+    }
+
+  }, [type]);
+
 
   const months = [
     { value: 7, label: "Julho" },
@@ -25,24 +46,24 @@ const List: React.FC = () => {
 
   return (
     <Container>
-      <ContentHeader title="Lista" lineColor="#E44C4E" >
+      <ContentHeader title={params.title} lineColor={params.lineColor} >
         <SelectInput options={months} />
         <SelectInput options={years} />
 
       </ContentHeader>
 
       <Filters>
-        <button 
-            type="button"
-            className="tag-filter tag-filter-approved"
-            >
+        <button
+          type="button"
+          className="tag-filter tag-filter-approved"
+        >
           Aprovados
         </button>
 
-        <button 
-            type="button"
-            className="tag-filter tag-filter-refused"
-            >
+        <button
+          type="button"
+          className="tag-filter tag-filter-refused"
+        >
           Recusados
         </button>
       </Filters>
