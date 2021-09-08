@@ -2,7 +2,7 @@ import React from "react";
 
 import { Container, Tag } from './styles'
 
-interface IHistoryFinanceCardProps {
+interface IHistoryCardProps {
   id: number;
   tagColor: string;
   title: string;
@@ -11,7 +11,7 @@ interface IHistoryFinanceCardProps {
 
 }
 
-const HistoryFinanceCard: React.FC<IHistoryFinanceCardProps> = ({ 
+const HistoryFinanceCard: React.FC<IHistoryCardProps> = ({ 
   tagColor, title, subtitle, amount
  }) => {
   return (
