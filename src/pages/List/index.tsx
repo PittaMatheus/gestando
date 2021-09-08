@@ -17,7 +17,7 @@ interface IRouteParams {
 }
 
 
-interface Idata {
+interface IdataCard {
   createdAt: Date,
   updatedAt: Date | null,
   status: string,
@@ -37,7 +37,7 @@ interface ITagColor {
 
 const List: React.FC<IRouteParams> = ({ match }) => {
 
-  const [data, setData] = useState<Idata[]>();
+  const [data, setData] = useState<IdataCard[]>();
 
   useEffect(() => {
     getCards()

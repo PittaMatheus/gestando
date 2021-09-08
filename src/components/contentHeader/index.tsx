@@ -1,7 +1,5 @@
 import React from "react";
 
-import SelectInput from '../../components/SelectInput';
-
 
 import {
   Container,
