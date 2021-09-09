@@ -4,10 +4,13 @@ import Axios from 'axios'
 
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/contentHeader';
-import SelectInput from '../../components/SelectInput';
 import HistoryCard from '../../components/HistoryCard';
 import { ajaxUrl } from "../../utils/config/ajaxPaths";
 import formatDate from '../../utils/formatDate';
+import formatCurrency from '../../utils/formatCurrency';
+import monthList from '../../utils/months';
+
+import SelectInput from '../../components/SelectInput';
 
 interface IRouteParams {
   match: {
@@ -39,12 +42,16 @@ interface ITagColor {
 const List: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataCard[]>();
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() -1));
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear() -1 ));
+  const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
+
+  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
+  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested, approved, refused']);
+
 
   useEffect(() => {
     getCards()
-  }, [monthSelected, yearSelected]);
+  }, [monthSelected, yearSelected, selectedStatus]);
 
   const processColor = (status: string) => {
     let color = {
@@ -72,12 +79,10 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         const date = new Date(item.createdAt)
         const month = String(date.getMonth() + 1)
         const year = String(date.getFullYear())
-        
-        return month === monthSelected && year === yearSelected;
+        return selectedStatus.includes(item.status);
       });
 
-      
-      const formattedData = filteredDate.map((item : any) => {
+      const formattedData = filteredDate.map((item: any) => {
         let color = processColor(item.status);
         return {
           id: item.id,
@@ -88,7 +93,22 @@ const List: React.FC<IRouteParams> = ({ match }) => {
           tagColor: color
         }
       })
-      setData(formattedData)
+
+      const data2 = formattedData.map((item: any) => {
+        let color = processColor(item.status);
+        return {
+          id: item.id,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          status: item.status,
+          metadatas: item.metadatas,
+          tagColor: color
+        }
+      })
+
+      setData(data2)
+      setDataOriginal(data2)
+
     } catch (error) {
       console.log(error)
     }
@@ -110,43 +130,86 @@ const List: React.FC<IRouteParams> = ({ match }) => {
   }, [type]);
 
 
-  const months = [
-    { value: 7, label: "Julho" },
-    { value: 8, label: "Agosto" },
-    { value: 9, label: "Setembro" }
-  ];
 
 
 
-  const years = [
-    { value: 2021, label: "2021" },
-    { value: 2020, label: "2020" },
-    { value: 2019, label: "2019" },
-    { value: 2018, label: "2018" },
-  ];
+
+  const years = useMemo(() => {
+    let uniqueYears: number[] = [];
+    dataOriginal && dataOriginal.forEach(item => {
+      const date = new Date(item.createdAt);
+      const year = date.getFullYear();
+      // Se o ano não está incluso na lista de anos unicos, será adicionado
+      if (!uniqueYears.includes(year)) {
+        uniqueYears.push(year);
+      }
+    });
+    uniqueYears.sort((a, b) => b - a)
+    return uniqueYears.map(year => {
+      return {
+        value: year,
+        label: String(year)
+      }
+    })
+
+  }, [dataOriginal]);
+
+  const handleFilter = (status: string) => {
+    const alreadySelected = selectedStatus.findIndex(item => item === status);
+    if (alreadySelected >= 0) {
+      // desmarca o filtro
+      const filtered = selectedStatus.filter(item => item !== status);
+      setSelectedStatus(filtered)
+    } else {
+      // Mantem os filtros existentes, e adiciona o novo 
+      setSelectedStatus((prev) => [...prev, status])
+    }
+
+  }
 
   return (
     <Container>
       <ContentHeader title={params.title} lineColor={params.lineColor} >
-        <SelectInput options={months} onChange={(e) => setMonthSelected(e.target.value)} defaultValue={"7"} />
-        <SelectInput options={years} onChange={(e) => setYearSelected(e.target.value)} defaultValue={"2020"} />
-
+        {/* <input type="checkbox" />
+         <SelectInput options={months} onChange={(e) => setMonthSelected(e.target.value)} defaultValue={monthSelected} />
+        <SelectInput options={years} onChange={(e) => setYearSelected(e.target.value)} defaultValue={yearSelected} />
+        <button
+          type="button"
+          className="tag-filter tag-filter-filtrar"
+        >
+          Filtrar
+        </button> */}
 
       </ContentHeader>
 
       <Filters>
         <button
           type="button"
-          className="tag-filter tag-filter-approved"
+          className={`tag-filter tag-filter-approved
+          ${selectedStatus.includes('approved') && 'tag-actived'}
+          `}
+          onClick={() => handleFilter('approved')}
         >
           Aprovados
         </button>
 
         <button
           type="button"
-          className="tag-filter tag-filter-refused"
+          className={`tag-filter tag-filter-refused
+          ${selectedStatus.includes('refused') && 'tag-actived'}
+          `}
+          onClick={() => handleFilter('refused')}
         >
           Recusados
+        </button>
+        <button
+          type="button"
+          className={`tag-filter tag-filter-requested
+          ${selectedStatus.includes('requested') && 'tag-actived'}
+          `}
+          onClick={() => handleFilter('requested')}
+        >
+          Pendentes
         </button>
       </Filters>
 
@@ -159,7 +222,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             id={item.id}
             tagColor={item.tagColor}
             title={item.metadatas.name}
-            amount={item.metadatas.limit}
+            amount={formatCurrency(item.metadatas.limit)}
             subtitle={item.createdAt}
           />
         ))

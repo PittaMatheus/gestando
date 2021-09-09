@@ -7,7 +7,7 @@ interface IHistoryCardProps {
   tagColor: string;
   title: string;
   subtitle: Date;
-  amount: number;
+  amount: string;
 
 }
 

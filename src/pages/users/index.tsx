@@ -43,7 +43,7 @@ interface IdataUser {
     neighborhood: string,
     postalCode: number,
   },
-  salaryBase: number,
+  salaryBase: string,
   id: number,
 }
 

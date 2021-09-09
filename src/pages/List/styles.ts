@@ -20,10 +20,11 @@ export const Filters = styled.div`
     margin: 0 10px;
 
     transition: opacity .3s;
+    opacity: .4;
 
-    &:hover {
-      opacity: .7;
-    }
+    /* &:hover {
+      opacity: .5;
+    } */
   }
 
   .tag-filter-approved::after {
@@ -41,5 +42,19 @@ export const Filters = styled.div`
     margin: 0 auto;
     border-bottom: 10px solid ${props => props.theme.colors.warning};
   }
+
+  .tag-filter-requested::after {
+    content: '';
+    display: block;
+    width: 55px;
+    margin: 0 auto;
+    border-bottom: 10px solid ${props => props.theme.colors.info};
+  }
+
+.tag-actived {
+  opacity: 1;
+}
+
+
 
 `;

@@ -27,6 +27,21 @@ export const TitleContainer = styled.div<ITitleContainerProps>`
 
 export const Controllers = styled.div`
   display: flex;
+
+  .tag-filter-filtrar {
+    font-size: 18px;
+    font-weight: 500;
+    background: ${props => props.theme.colors.tertiary};
+    color: ${props => props.theme.colors.white};
+
+    margin: 0 10px;
+
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
 `;
 
 
