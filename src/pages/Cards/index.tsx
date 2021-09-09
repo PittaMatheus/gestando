@@ -39,14 +39,14 @@ interface ITagColor {
   color: string
 }
 
-const List: React.FC<IRouteParams> = ({ match }) => {
+const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataCard[]>();
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
 
   const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
   const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
-  const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested, approved, refused']);
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested', 'approved', 'refused']);
 
 
   useEffect(() => {
@@ -75,14 +75,11 @@ const List: React.FC<IRouteParams> = ({ match }) => {
   async function getCards() {
     try {
       const res = await Axios.get(ajaxUrl.cards.get)
-      const filteredDate = res.data.filter((item: any) => {
-        const date = new Date(item.createdAt)
-        const month = String(date.getMonth() + 1)
-        const year = String(date.getFullYear())
+      const filteredStatus = res.data.filter((item: any) => {
         return selectedStatus.includes(item.status);
       });
 
-      const formattedData = filteredDate.map((item: any) => {
+      const formattedData = filteredStatus.map((item: any) => {
         let color = processColor(item.status);
         return {
           id: item.id,
@@ -232,4 +229,4 @@ const List: React.FC<IRouteParams> = ({ match }) => {
   )
 }
 
-export default List;
+export default Cards;
