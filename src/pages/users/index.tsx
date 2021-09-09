@@ -7,7 +7,11 @@ import ContentHeader from '../../components/contentHeader';
 import HistoryCard from '../../components/HistoryCard';
 import FindInput from '../../components/FindInput';
 
-import { ajaxUrl } from "../../config/ajaxPaths";
+import formatCurrency from '../../utils/formatCurrency';
+import formatDate from '../../utils/formatDate';
+
+import { ajaxUrl } from "../../utils/config/ajaxPaths";
+
 
 interface IRouteParams {
   match: {
@@ -78,21 +82,15 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
       const res = await Axios.get(ajaxUrl.users.get)
       const response = res.data.map((item: any) => {
         let color = processColor(item.status);
-        const date = new Date(item.createdAt)
-        const day = date.getDate().toString().padStart(2, '0')
-        const month = (date.getMonth() + 1).toString().padStart(2, '0')
-        const year = date.getFullYear()
-
-        const formatted = `${day}/${month}/${year}`
         return {
           id: item.id,
           name: item.name,
-          createdAt: formatted,
+          createdAt: formatDate(item.createdAt),
           updatedAt: item.updatedAt,
           metadatas: item.metadatas,
           tagColor: color,
           address: item.address,
-          salaryBase: item.salaryBase
+          salaryBase: formatCurrency(Number(item.salaryBase))
         }
       })
       setDataOriginal(response)
