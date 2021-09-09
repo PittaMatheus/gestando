@@ -5,6 +5,8 @@ import Axios from 'axios'
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/contentHeader';
 import HistoryCard from '../../components/HistoryCard';
+import FindInput from '../../components/FindInput';
+
 import { ajaxUrl } from "../../config/ajaxPaths";
 
 interface IRouteParams {
@@ -41,14 +43,14 @@ interface IdataUser {
   id: number,
 }
 
-interface ITagColor {
-  status: string,
-  color: string
+interface IFilter {
+  filter: string,
 }
 
 const Users: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataUser[]>();
+  const [dataOriginal, setDataOriginal] = useState<IdataUser[]>();
 
   useEffect(() => {
     getUsers()
@@ -93,6 +95,7 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
           salaryBase: item.salaryBase
         }
       })
+      setDataOriginal(response)
       setData(response)
     } catch (error) {
       console.log(error)
@@ -114,11 +117,28 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
 
   }, [type]);
 
+  const findUsers = (event: any) => {
+    let filtro = event.target.value
+    let newUsers : Array<IdataUser> = []
+    if (dataOriginal) {
+      dataOriginal.forEach(user => {
+        if(user.name){
+          if(user.name.indexOf(filtro) > -1){
+            newUsers.push(user)
+          }
+        }
+      })
+      if(filtro === ''){
+        newUsers = dataOriginal
+      }
+      setData(newUsers)
+    }
+  }
 
   return (
     <Container>
       <ContentHeader title={params.title} lineColor={params.lineColor} >
-        
+        <FindInput onChange={findUsers} placeholder="Pesquisar"></FindInput>
       </ContentHeader>
 
       <Filters>
