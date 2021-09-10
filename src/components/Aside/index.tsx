@@ -8,18 +8,21 @@ import {
   MdExitToApp
 } from 'react-icons/md';
 
-import logoImg from '../../assets/logo.svg'
+import logoImg from '../../assets/logo.svg';
+import { useAuth } from '../../hooks/auth';
 
-import { 
+import {
   Container,
   Header,
   LogImg,
   Title,
   MenuContainer,
-  MenuItemLink
- } from './styles'
+  MenuItemLink,
+  MenuItemButton
+} from './styles'
 
 const Aside: React.FC = () => {
+  const { signOut } = useAuth();
   return (
     <Container>
       <Header>
@@ -43,10 +46,10 @@ const Aside: React.FC = () => {
           <MdDescription />
           Pedidos
         </MenuItemLink>
-        <MenuItemLink href="#">
+        <MenuItemButton onClick={signOut} >
           <MdExitToApp />
           Sair
-        </MenuItemLink>
+        </MenuItemButton>
       </MenuContainer>
     </Container>
 
