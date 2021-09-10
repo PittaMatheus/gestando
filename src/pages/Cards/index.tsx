@@ -43,11 +43,9 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataCard[]>();
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
-
   const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
   const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
   const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested', 'approved', 'refused']);
-
 
   useEffect(() => {
     getCards()

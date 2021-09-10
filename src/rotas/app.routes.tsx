@@ -9,14 +9,12 @@ import Layout from '../components/Layout';
 
 const AppRoutes: React.FC = () => (
   <Layout>
-    <BrowserRouter >
       <Switch>
         <Route path="/home" exact component={Home} />
         <Route path="/users" exact component={Users} />
         <Route path="/solicitations" exact component={solicitations} />
         <Route path="/list/:type" exact component={Cards} />
       </Switch>
-    </BrowserRouter>
   </Layout>
 );
 
