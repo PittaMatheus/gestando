@@ -52,3 +52,14 @@ export const Tag = styled.div<ITagProps>`
   position: absolute;
   left: 0%;
 `;
+
+
+export const Form = styled.form`
+  /* width: 300px;
+  height: 300px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: ${props => props.theme.colors.tertiary}; */
+
+
+`;
