@@ -8,7 +8,8 @@ import HistoryCard from '../../components/HistoryCard';
 import { ajaxUrl } from "../../utils/config/ajaxPaths";
 import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
-import monthList from '../../utils/months';
+
+import IdataCard from '../../Interfaces/Interfaces'
 
 import SelectInput from '../../components/SelectInput';
 
@@ -21,18 +22,6 @@ interface IRouteParams {
 }
 
 
-interface IdataCard {
-  createdAt: Date,
-  updatedAt: Date | null,
-  status: string,
-  id: number,
-  tagColor: string,
-  metadatas: {
-    name: string,
-    digits: number,
-    limit: number
-  }
-}
 
 interface ITagColor {
   status: string,
@@ -43,13 +32,11 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataCard[]>();
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
   const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested', 'approved', 'refused']);
 
   useEffect(() => {
     getCards()
-  }, [monthSelected, yearSelected, selectedStatus]);
+  }, [ selectedStatus]);
 
   const processColor = (status: string) => {
     let color = {
@@ -89,25 +76,12 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
         }
       })
 
-      const data2 = formattedData.map((item: any) => {
-        let color = processColor(item.status);
-        return {
-          id: item.id,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
-          status: item.status,
-          metadatas: item.metadatas,
-          tagColor: color
-        }
-      })
-
-      setData(data2)
-      setDataOriginal(data2)
+      setData(formattedData)
+      setDataOriginal(formattedData)
 
     } catch (error) {
       console.log(error)
     }
-
   }
 
   const { type } = match.params;
@@ -125,30 +99,6 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
   }, [type]);
 
 
-
-
-
-
-  const years = useMemo(() => {
-    let uniqueYears: number[] = [];
-    dataOriginal && dataOriginal.forEach(item => {
-      const date = new Date(item.createdAt);
-      const year = date.getFullYear();
-      // Se o ano não está incluso na lista de anos unicos, será adicionado
-      if (!uniqueYears.includes(year)) {
-        uniqueYears.push(year);
-      }
-    });
-    uniqueYears.sort((a, b) => b - a)
-    return uniqueYears.map(year => {
-      return {
-        value: year,
-        label: String(year)
-      }
-    })
-
-  }, [dataOriginal]);
-
   const handleFilter = (status: string) => {
     const alreadySelected = selectedStatus.findIndex(item => item === status);
     if (alreadySelected >= 0) {
@@ -165,16 +115,6 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
   return (
     <Container>
       <ContentHeader title={params.title} lineColor={params.lineColor} >
-        {/* <input type="checkbox" />
-         <SelectInput options={months} onChange={(e) => setMonthSelected(e.target.value)} defaultValue={monthSelected} />
-        <SelectInput options={years} onChange={(e) => setYearSelected(e.target.value)} defaultValue={yearSelected} />
-        <button
-          type="button"
-          className="tag-filter tag-filter-filtrar"
-        >
-          Filtrar
-        </button> */}
-
       </ContentHeader>
 
       <Filters>
