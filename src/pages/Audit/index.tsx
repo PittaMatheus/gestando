@@ -100,7 +100,7 @@ const Audit: React.FC<IRouteParams> = ({ match }) => {
             tagColor={item.tagColor}
             title={item.before.name}
             amount={formatCurrency(item.before.digits)}
-            subtitle={formatDate(item.createdAt)}
+            subtitle={formatDate(item.after.updatedAt)}
             actionBefore={item.before.status}
             actionAfter={item.after.status}
 

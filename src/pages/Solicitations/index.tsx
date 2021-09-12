@@ -90,32 +90,32 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
           dataSelected = item;
         }
       })
-      console.log(dataSelected)
       setDataInfo(dataSelected);
     }
   }
 
 
   async function handleAudit(data: IdataCard, action: string){
+    let updateDate = new Date().getTime();
     
     let obj = {
-      createdAt: "2021-05-28T23:00:02.790Z",
+      createdAt: data.createdAt,
       type: "card-status-change",
       before: {
-        createdAt: "2013-12-14T11:23:05.635Z",
+        createdAt: data.createdAt,
         id: data.id,
         metadatas: {
           name: data.metadatas.name,
           digits: data.metadatas.digits
         },
-        digits: 4405,
+        digits: data.metadatas.digits,
         name: data.metadatas.name,
         status: data.status,
         updatedAt: null,
         user_id: data.id
       },
       after: {
-        createdAt: "2020-12-14T11:23:05.635Z",
+        createdAt: data.createdAt,
         id: data.id,
         metadatas: {
           name: data.metadatas.name,
@@ -124,10 +124,10 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         digits: data.metadatas.digits,
         name: data.metadatas.name,
         status: action,
-        updatedAt: "2021-12-14T11:23:05.635Z",
+        updatedAt: updateDate,
         user_id: data.id
       },
-      requestedBy: 11112
+      requestedBy: 11112 // Nao entendi esse parametro :(
     }
 
     const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
@@ -137,11 +137,11 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   async function handleCardRequest(action: string) {
     try {
       if (dataInfo) {
-        console.log(dataInfo)
+        const cloneDataInfo = JSON.parse(JSON.stringify(dataInfo));
         let actionMsg = action == "approved" ? "aprovado" : "recusado"
-        dataInfo.status = action
+        cloneDataInfo.status = action
         // Gerencia de cartão
-        const res = await Axios.put(ajaxUrl.cards.manage + "/" + dataInfo.id, dataInfo)
+        const res = await Axios.put(ajaxUrl.cards.manage + "/" + cloneDataInfo.id, cloneDataInfo)
         // Auditoria
         handleAudit(dataInfo, action)
         addToast("Cartão " + actionMsg + " com sucesso!", { appearance: 'success' });
