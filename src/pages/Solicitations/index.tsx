@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, FormEvent } from 'react';
 import { useToasts } from 'react-toast-notifications';
+import validator from 'validator';
 
 import Axios from 'axios'
 
@@ -198,12 +199,36 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
     setModalCreateRequest(true)
   }
 
-  const teste = (e: FormEvent<HTMLFormElement>) => {
+  async function createCardRequest(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Cadastrar")
-    console.log(name)
-    console.log(limit)
-    console.log(digits)
+    let createdDate = new Date().getTime();
+
+
+    if (!validator.isNumeric(limit) || !validator.isNumeric(digits)) {
+      addToast("Campos Inválidos!", { appearance: 'error' });
+      return
+    }
+    let newCard= {
+      createdAt: createdDate,
+      updatedAt: null,
+      status: "requested",
+      metadatas: {
+        name: name,
+        digits: Number(digits),
+        limit: Number(limit),
+      }
+    }
+
+    try {
+      const res = await Axios.post(ajaxUrl.cards.manage, newCard)
+      addToast("Pedido criado com sucesso!", { appearance: 'success' });
+      backToList();
+    } catch (error) {
+      addToast("Erro ao criar o pedido!", { appearance: 'error' });
+      console.log(error)
+    } 
+
+   
 
   }
 
@@ -245,7 +270,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
             <>
               <Button className="button-back" onClick={backToList}><MdKeyboardBackspace /></Button>
               <section className="page-contain">
-                <Form onSubmit={(e) => { teste(e) }}>
+                <Form onSubmit={(e) => { createCardRequest(e) }}>
                   <FormTitle>Novo pedido</FormTitle>
                   <Input
                     placeholder="Nome"
@@ -254,13 +279,13 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
                     required />
                   <Input
                     placeholder="Digitos"
-                    type="text"
+                    type="number"
                     onChange={(e) => { setDigits(e.target.value) }}
                     required />
                   <Input
                     placeholder="Limite"
-                    type="text"
-                    onChange={(e) => { setLimit(e.target.value) }}                    
+                    type="number"
+                    onChange={(e) => { setLimit(e.target.value) }}
                     required />
                   <Button type="submit">
                     Acessar
