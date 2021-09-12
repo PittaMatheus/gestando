@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, FormEvent } from 'react';
 import { useToasts } from 'react-toast-notifications';
 
 import Axios from 'axios'
@@ -8,18 +8,26 @@ import {
 } from 'react-icons/md';
 
 
-import { Container, Content, MenuTeste } from './styles';
+import { Container, Content, MenuTeste, Form, FormTitle } from './styles';
 import ContentHeader from '../../components/contentHeader';
+
 import HistoryCard from '../../components/HistoryCard';
 import { ajaxUrl } from "../../utils/config/ajaxPaths";
 import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
+import FindInput from '../../components/FindInput';
 
 import IdataCard from '../../Interfaces/Interfaces'
 import IdataAudit from '../../Interfaces/Interfaces'
 
-import Button from '../../components/Button';
 import { Filters } from '../Cards/styles';
+
+import logoImg from '../../assets/logo.svg'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+
+import { useAuth } from '../../hooks/auth';
+
 
 interface IRouteParams {
   match: {
@@ -41,7 +49,17 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   const [data, setData] = useState<IdataCard[]>();
   const [modal, setModal] = useState<boolean>();
   const [dataInfo, setDataInfo] = useState<IdataCard>();
-  const [audit, setAudit] = useState<IdataAudit>();
+  const [actions, setActions] = useState<Boolean>(true);
+  const [modalCreateRequest, setModalCreateRequest] = useState<boolean>();
+
+
+
+  const [name, setName] = useState<string>('');
+  const [digits, setDigits] = useState<string>('');
+  const [limit, setLimit] = useState<string>('');
+
+
+
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
   const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested']);
   const { addToast } = useToasts();
@@ -79,10 +97,14 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
 
   const backToList = () => {
     setModal(false)
+    setModalCreateRequest(false)
+    setActions(true);
   }
 
   const showDetailItem = (id: number, action: string) => {
     setModal(true);
+    setActions(false);
+
     if (data) {
       let dataSelected
       data.forEach((item: IdataCard) => {
@@ -95,9 +117,9 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   }
 
 
-  async function handleAudit(data: IdataCard, action: string){
+  async function handleAudit(data: IdataCard, action: string) {
     let updateDate = new Date().getTime();
-    
+
     let obj = {
       createdAt: data.createdAt,
       type: "card-status-change",
@@ -146,6 +168,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         handleAudit(dataInfo, action)
         addToast("Cartão " + actionMsg + " com sucesso!", { appearance: 'success' });
         getCards()
+        setActions(true);
         setModal(false)
       }
     } catch (error) {
@@ -153,50 +176,133 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
     }
   }
 
-return (
-  <Container>
-    <ContentHeader title={"Solicitações"} lineColor={"#F7943B"} >
-    </ContentHeader>
-    <Content>
-      <MenuTeste>
-        {modal &&
+  const findUsers = (event: any) => {
+    let filtro = event.target.value
+    let newUsers: Array<IdataCard> = []
+    if (dataOriginal) {
+      dataOriginal.forEach(user => {
+        if (user.metadatas.name) {
+          if (user.metadatas.name.indexOf(filtro) > -1) {
+            newUsers.push(user)
+          }
+        }
+      })
+      if (filtro === '') {
+        newUsers = dataOriginal
+      }
+      setData(newUsers)
+    }
+  }
+  const createRequest = () => {
+    setActions(false);
+    setModalCreateRequest(true)
+  }
+
+  const teste = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Cadastrar")
+    console.log(name)
+    console.log(limit)
+    console.log(digits)
+
+  }
+
+  return (
+    <Container>
+      <ContentHeader title={"Solicitações"} lineColor={"#F7943B"} >
+        {actions &&
           <>
-            <Button className="button-back" onClick={backToList}><MdKeyboardBackspace /></Button>
-            <section className="page-contain">
-              <a href="#" className="data-card">
-                {dataInfo &&
-                  <>
-                    <h3> {dataInfo.metadatas.name}</h3>
-                    <h4> {dataInfo.createdAt}</h4>
-                    <p>Limit {formatCurrency(dataInfo.metadatas.limit)}</p>
-                    <p>{dataInfo.metadatas.limit}</p>
-                    <div>
-                      <Button onClick={() => handleCardRequest("approved")} className="action-button-approve">Aprovar</Button>
-                      <Button onClick={() => handleCardRequest("refused")} className="action-button-reject">Rejeitar</Button>
-                    </div>
-                  </>
-                }
-              </a>
-            </section>
+            <FindInput onChange={findUsers} placeholder="Pesquisar"></FindInput>
+            <Button onClick={createRequest} className="tag-button-action">Criar</Button>
           </>
         }
-      </MenuTeste>
-      {data && !modal && data.map(item => (
-        <HistoryCard
-          callBackClick={showDetailItem}
-          buttonAction={true}
-          key={item.id}
-          id={item.id}
-          tagColor={item.tagColor}
-          title={item.metadatas.name}
-          amount={formatCurrency(item.metadatas.limit)}
-          subtitle={formatDate(item.createdAt)}
-        />
-      ))
-      }
-    </Content>
-  </Container>
-)
+      </ContentHeader>
+      <Content>
+        <MenuTeste>
+          {modal && !modalCreateRequest &&
+            <>
+              <Button className="button-back" onClick={backToList}><MdKeyboardBackspace /></Button>
+              <section className="page-contain">
+                <a href="#" className="data-card">
+                  {dataInfo &&
+                    <>
+                      <h3> {dataInfo.metadatas.name}</h3>
+                      <h4> {dataInfo.createdAt}</h4>
+                      <p>Limit {formatCurrency(dataInfo.metadatas.limit)}</p>
+                      <p>{dataInfo.metadatas.limit}</p>
+                      <div>
+                        <Button onClick={() => handleCardRequest("approved")} className="action-button-approve">Aprovar</Button>
+                        <Button onClick={() => handleCardRequest("refused")} className="action-button-reject">Rejeitar</Button>
+                      </div>
+                    </>
+                  }
+                </a>
+              </section>
+            </>
+          }
+
+          {modalCreateRequest &&
+            <>
+              <Button className="button-back" onClick={backToList}><MdKeyboardBackspace /></Button>
+              <section className="page-contain">
+                <Form onSubmit={(e) => { teste(e) }}>
+                  <FormTitle>Novo pedido</FormTitle>
+                  <Input
+                    placeholder="Nome"
+                    type="text"
+                    onChange={(e) => { setName(e.target.value) }}
+                    required />
+                  <Input
+                    placeholder="Digitos"
+                    type="text"
+                    onChange={(e) => { setDigits(e.target.value) }}
+                    required />
+                  <Input
+                    placeholder="Limite"
+                    type="text"
+                    onChange={(e) => { setLimit(e.target.value) }}                    
+                    required />
+                  <Button type="submit">
+                    Acessar
+                  </Button>
+                </Form>
+
+                {/* 
+
+                {
+                "id": 1001,
+                "createdAt": "2017-06-25T19:36:32.711Z",
+                "updatedAt": null,
+                "status": "approved",
+                "metadatas": {
+                  "name": "Tiago Rodrigues",
+                  "digits": 8862,
+                  "limit": 1877
+                }, */}
+
+
+
+              </section>
+            </>
+          }
+
+        </MenuTeste>
+        {data && !modal && !modalCreateRequest && data.map(item => (
+          <HistoryCard
+            callBackClick={showDetailItem}
+            buttonAction={true}
+            key={item.id}
+            id={item.id}
+            tagColor={item.tagColor}
+            title={item.metadatas.name}
+            amount={formatCurrency(item.metadatas.limit)}
+            subtitle={formatDate(item.createdAt)}
+          />
+        ))
+        }
+      </Content>
+    </Container>
+  )
 }
 
 export default Solicitations;

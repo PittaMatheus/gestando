@@ -27,6 +27,10 @@ export const TitleContainer = styled.div<ITitleContainerProps>`
 
 export const Controllers = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 30%;
+  
 
   .tag-filter-filtrar {
     font-size: 18px;
@@ -41,6 +45,13 @@ export const Controllers = styled.div`
     &:hover {
       opacity: .7;
     }
+  }
+
+  .tag-button-action{
+    /* width: 60px; */
+    background: ${props => props.theme.colors.info};
+    margin-left: 35px
+
   }
 `;
 

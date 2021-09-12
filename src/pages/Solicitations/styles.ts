@@ -5,6 +5,29 @@ export const Container = styled.div``;
 
 export const Content = styled.main``;
 
+export const Form = styled.form`
+  width: 300px;
+  height: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  align-content: left;
+  background-color: ${props => props.theme.colors.tertiary};
+
+
+`;
+
+export const FormTitle = styled.h1`
+  margin-bottom: 40px;
+  color: ${props => props.theme.colors.white};
+  &:after{
+    content: '';
+    display: block;
+    width: 55px;
+    border-bottom: 10px solid ${props => props.theme.colors.info};
+  }
+
+`;
+
 export const MenuTeste = styled.div`
   align-content: left;
   margin-top: 15px;
@@ -22,6 +45,7 @@ export const MenuTeste = styled.div`
 
 .page-contain {
   display: flex;
+  margin-top: 50px;
   /* min-height: 100vh; */
   /* align-items: center; */
   justify-content: center;
