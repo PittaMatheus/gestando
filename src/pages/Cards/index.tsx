@@ -68,7 +68,7 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
         let color = processColor(item.status);
         return {
           id: item.id,
-          createdAt: formatDate(item.createdAt),
+          createdAt: item.createdAt,
           updatedAt: item.updatedAt,
           status: item.status,
           metadatas: item.metadatas,
@@ -149,7 +149,7 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
             tagColor={item.tagColor}
             title={item.metadatas.name}
             amount={formatCurrency(item.metadatas.limit)}
-            subtitle={item.createdAt}
+            subtitle={formatDate(item.createdAt)}
           />
         ))
         }

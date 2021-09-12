@@ -12,7 +12,7 @@ interface IHistoryCardProps {
   id: number;
   tagColor: string;
   title: string;
-  subtitle: Date;
+  subtitle: string;
   amount: string;
   buttonAction?: Boolean;
   callBackClick?: Function;

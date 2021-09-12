@@ -85,7 +85,7 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
         return {
           id: item.id,
           name: item.name,
-          createdAt: formatDate(item.createdAt),
+          createdAt: item.createdAt,
           updatedAt: item.updatedAt,
           metadatas: item.metadatas,
           tagColor: color,
@@ -165,7 +165,7 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
             tagColor={item.tagColor}
             title={item.name}
             amount={item.salaryBase}
-            subtitle={item.createdAt}
+            subtitle={formatDate(item.createdAt)}
           />
         ))
         }

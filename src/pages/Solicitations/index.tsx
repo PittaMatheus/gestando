@@ -61,7 +61,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
       const formattedData = filteredStatus.map((item: any) => {
         return {
           id: item.id,
-          createdAt: formatDate(item.createdAt),
+          createdAt: item.createdAt,
           updatedAt: item.updatedAt,
           status: item.status,
           metadatas: item.metadatas,
@@ -90,6 +90,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
           dataSelected = item;
         }
       })
+      console.log(dataSelected)
       setDataInfo(dataSelected);
     }
   }
@@ -136,6 +137,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   async function handleCardRequest(action: string) {
     try {
       if (dataInfo) {
+        console.log(dataInfo)
         let actionMsg = action == "approved" ? "aprovado" : "recusado"
         dataInfo.status = action
         // Gerencia de cartão
@@ -188,7 +190,7 @@ return (
           tagColor={item.tagColor}
           title={item.metadatas.name}
           amount={formatCurrency(item.metadatas.limit)}
-          subtitle={item.createdAt}
+          subtitle={formatDate(item.createdAt)}
         />
       ))
       }
