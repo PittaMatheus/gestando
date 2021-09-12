@@ -95,9 +95,12 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   async function handleCardRequest(action: string) {
     try {
       if (dataInfo) {
+        let actionMsg = action == "approved" ? "aprovado" : "recusado"
         dataInfo.status = action
         const res = await Axios.put(ajaxUrl.cards.manage + "/" + dataInfo.id, dataInfo)
-        addToast('Cartão aprovado com sucesso!', { appearance: 'success' });
+        addToast("Cartão " + actionMsg + " com sucesso!", { appearance: 'success' });
+        getCards()
+        setModal(false)
       }
     } catch (error) {
       console.log(error)
