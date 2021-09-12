@@ -222,6 +222,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
     try {
       const res = await Axios.post(ajaxUrl.cards.manage, newCard)
       addToast("Pedido criado com sucesso!", { appearance: 'success' });
+      getCards();
       backToList();
     } catch (error) {
       addToast("Erro ao criar o pedido!", { appearance: 'error' });
