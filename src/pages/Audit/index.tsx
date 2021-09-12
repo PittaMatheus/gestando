@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 
-import Axios from 'axios'
+import Axios from 'axios';
 
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/contentHeader';
@@ -9,7 +9,7 @@ import { ajaxUrl } from "../../utils/config/ajaxPaths";
 import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
 
-import IdataAudit from '../../Interfaces/Interfaces'
+import IdataAudit from '../../Interfaces/Interfaces';
 
 import SelectInput from '../../components/SelectInput';
 

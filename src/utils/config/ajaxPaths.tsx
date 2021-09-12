@@ -13,6 +13,8 @@ export const ajaxUrl = {
   "audits": {
     get: getBaseUrl() + "/api/audits",
     manage: getBaseUrl() + "/api/audits"
-
+  },
+  "analysts": {
+    get: getBaseUrl() + "/api/analysts"
   }
 }
