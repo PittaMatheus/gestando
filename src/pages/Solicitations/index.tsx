@@ -18,7 +18,7 @@ import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
 import FindInput from '../../components/FindInput';
 
-import IdataCard from '../../Interfaces/Interfaces'
+import IdataCard from '../../Interfaces/IDataCard'
 import IdataAudit from '../../Interfaces/Interfaces'
 
 import { Filters } from '../Cards/styles';
@@ -154,8 +154,9 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
     }
 
     const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
-
   }
+
+
 
   async function handleCardRequest(action: string) {
     try {
@@ -208,28 +209,69 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
       addToast("Campos Inválidos!", { appearance: 'error' });
       return
     }
-    let newCard= {
-      createdAt: createdDate,
+    let newCard: IdataCard = {
+      id: 0,
+      createdAt: new Date(createdDate),
       updatedAt: null,
       status: "requested",
       metadatas: {
         name: name,
         digits: Number(digits),
         limit: Number(limit),
-      }
+      },
+      tagColor: "teste"
     }
 
     try {
       const res = await Axios.post(ajaxUrl.cards.manage, newCard)
+      console.log(res)
+      let id_card = res.data.id
       addToast("Pedido criado com sucesso!", { appearance: 'success' });
       getCards();
       backToList();
+      newCard.id = id_card
+      auditCreateCard(newCard)
     } catch (error) {
       addToast("Erro ao criar o pedido!", { appearance: 'error' });
       console.log(error)
     } 
 
    
+  async function auditCreateCard(data: IdataCard) {
+    let obj = {
+      createdAt: data.createdAt,
+      type: "card-status-change",
+      before: {
+        createdAt: data.createdAt,
+        id: data.id,
+        metadatas: {
+          name: data.metadatas.name,
+          digits: data.metadatas.digits
+        },
+        digits: data.metadatas.digits,
+        name: data.metadatas.name,
+        status: data.status,
+        updatedAt: null,
+        user_id: data.id
+      },
+      after: {
+        createdAt: data.createdAt,
+        id: data.id,
+        metadatas: {
+          name: data.metadatas.name,
+          digits: data.metadatas.digits
+        },
+        digits: data.metadatas.digits,
+        name: data.metadatas.name,
+        status: null,
+        updatedAt: null,
+        user_id: data.id
+      },
+      requestedBy: 11112 // Nao entendi esse parametro :(
+    }
+
+    const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
+  }
 
   }
 

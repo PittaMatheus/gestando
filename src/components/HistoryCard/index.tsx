@@ -38,7 +38,9 @@ const HistoryFinanceCard: React.FC<IHistoryCardProps> = ({
       <Tag color={tagColor} />
       <div>
         <span>{title}</span>
-        {actionBefore && <div>{actionBefore} <MdArrowForward /> {actionAfter}</div>}
+        {actionAfter && <div>{actionBefore} <MdArrowForward /> {actionAfter}</div>}
+        {!actionAfter && <div>Created</div>}
+
         <small>{subtitle}</small>
       </div>
       <h3>{amount}</h3>

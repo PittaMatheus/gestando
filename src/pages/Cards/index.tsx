@@ -9,7 +9,7 @@ import { ajaxUrl } from "../../utils/config/ajaxPaths";
 import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
 
-import IdataCard from '../../Interfaces/Interfaces'
+import IdataCard from '../../Interfaces/IDataCard'
 
 import SelectInput from '../../components/SelectInput';
 
