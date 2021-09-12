@@ -162,13 +162,15 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
     try {
       if (dataInfo) {
         const cloneDataInfo = JSON.parse(JSON.stringify(dataInfo));
-        let actionMsg = action == "approved" ? "aprovado" : "recusado"
         cloneDataInfo.status = action
         // Gerencia de cartão
-        const res = await Axios.put(ajaxUrl.cards.manage + "/" + cloneDataInfo.id, cloneDataInfo)
+        if(action == 'deleted')
+          await Axios.delete(ajaxUrl.cards.manage + "/" + cloneDataInfo.id, cloneDataInfo)
+        else
+          await Axios.put(ajaxUrl.cards.manage + "/" + cloneDataInfo.id, cloneDataInfo)
         // Auditoria
         handleAudit(dataInfo, action)
-        addToast("Cartão " + actionMsg + " com sucesso!", { appearance: 'success' });
+        addToast("Cartão " + action + " com sucesso!", { appearance: 'success' });
         getCards()
         setActions(true);
         setModal(false)
@@ -298,9 +300,10 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
                       <h4> {dataInfo.createdAt}</h4>
                       <p>Limit {formatCurrency(dataInfo.metadatas.limit)}</p>
                       <p>{dataInfo.metadatas.limit}</p>
-                      <div>
-                        <Button onClick={() => handleCardRequest("approved")} className="action-button-approve">Aprovar</Button>
+                      <div className="action-button">
+                        <Button onClick={() => handleCardRequest("deleted")} className="action-button-delete">Excluir</Button>
                         <Button onClick={() => handleCardRequest("refused")} className="action-button-reject">Rejeitar</Button>
+                        <Button onClick={() => handleCardRequest("approved")} className="action-button-approve">Aprovar</Button>
                       </div>
                     </>
                   }

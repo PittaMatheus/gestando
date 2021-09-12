@@ -108,9 +108,23 @@ export const MenuTeste = styled.div`
     transition: transform .5s ease;
   }
 
+  .action-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
   .action-button-approve {
+
     background-color: ${props => props.theme.colors.success};
   }
+  .action-button-reject {
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: #F7931B;
+  }
+
 
   .link-text {
     display: block;

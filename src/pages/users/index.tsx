@@ -101,20 +101,6 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
 
   }
 
-  const { type } = match.params;
-  const params = useMemo(() => {
-    return type === 'cards' ?
-      {
-        title: 'Cartões',
-        lineColor: '#F7943B'
-      }
-      : {
-        title: 'Usuarios',
-        lineColor: '#E44C4E'
-      }
-
-  }, [type]);
-
   const findUsers = (event: any) => {
     let filtro = event.target.value
     let newUsers : Array<IdataUser> = []
@@ -135,26 +121,9 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
 
   return (
     <Container>
-      <ContentHeader title={params.title} lineColor={params.lineColor} >
+      <ContentHeader title={"Usuários"} lineColor={"#F7943B"} >
         <FindInput onChange={findUsers} placeholder="Pesquisar"></FindInput>
       </ContentHeader>
-
-      <Filters>
-        <button
-          type="button"
-          className="tag-filter tag-filter-approved"
-        >
-          Aprovados
-        </button>
-
-        <button
-          type="button"
-          className="tag-filter tag-filter-refused"
-        >
-          Recusados
-        </button>
-      </Filters>
-
 
       <Content>
 

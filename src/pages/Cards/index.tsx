@@ -84,20 +84,6 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
     }
   }
 
-  const { type } = match.params;
-  const params = useMemo(() => {
-    return type === 'cards' ?
-      {
-        title: 'Cartões',
-        lineColor: '#F7943B'
-      }
-      : {
-        title: 'Saídas',
-        lineColor: '#E44C4E'
-      }
-
-  }, [type]);
-
 
   const handleFilter = (status: string) => {
     const alreadySelected = selectedStatus.findIndex(item => item === status);
@@ -114,7 +100,7 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   return (
     <Container>
-      <ContentHeader title={params.title} lineColor={params.lineColor} >
+      <ContentHeader title={"Cartões"} lineColor={"#F7943B"} >
       </ContentHeader>
 
       <Filters>

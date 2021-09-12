@@ -87,7 +87,7 @@ const Audit: React.FC<IRouteParams> = ({ match }) => {
 
   return (
     <Container>
-      <ContentHeader title={"Auditoria"} lineColor={"#F7943B"} >
+      <ContentHeader title={"Auditoria"} lineColor={"#E44C4E"} >
       </ContentHeader>
 
 
