@@ -27,3 +27,8 @@
 
 9.  Lib de notificações
   yarn add react-toast-notifications
+
+10. Lib validator
+  yarn add validator
+  yarn add @types/validator -D
+  

@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import logoImg from '../../assets/logo.svg'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import validator from 'validator';
 
 import { useAuth } from '../../hooks/auth';
 
 import { Container, Logo, Form, FormTitle } from './style';
+import { useToasts } from 'react-toast-notifications';
+
 
 const Login: React.FC = () => {
-
   const [email, setEmail] = useState<string>('');
   const [Password, setPassword] = useState<string>('');
-
+  const { addToast } = useToasts();
   const { signIn } = useAuth();
+
+
+  const validateFields = (e: FormEvent<HTMLFormElement>, email: string) => {
+    e.preventDefault();
+    if (validator.isEmail(email)) {
+      signIn(email, Password);
+    } else {
+      addToast("Email inválido!", { appearance: 'error' });
+    }
+
+  }
 
   return (
     <Container>
@@ -21,7 +34,7 @@ const Login: React.FC = () => {
         <img src={logoImg} alt="logo" />
         <h2>Meu app</h2>
       </Logo>
-      <Form onSubmit={() => { signIn(email, Password) }}>
+      <Form onSubmit={(e) => { validateFields(e, email) }}>
         <FormTitle>Entrar</FormTitle>
         <Input
           placeholder="Email"
