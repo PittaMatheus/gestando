@@ -11,6 +11,8 @@ export const ajaxUrl = {
     get: getBaseUrl() + "/api/users"
   },
   "audits": {
-    get: getBaseUrl() + "/api/audits"
+    get: getBaseUrl() + "/api/audits",
+    manage: getBaseUrl() + "/api/audits"
+
   }
 }

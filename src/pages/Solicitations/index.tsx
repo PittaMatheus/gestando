@@ -16,6 +16,8 @@ import formatDate from '../../utils/formatDate';
 import formatCurrency from '../../utils/formatCurrency';
 
 import IdataCard from '../../Interfaces/Interfaces'
+import IdataAudit from '../../Interfaces/Interfaces'
+
 import Button from '../../components/Button';
 import { Filters } from '../Cards/styles';
 
@@ -39,6 +41,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   const [data, setData] = useState<IdataCard[]>();
   const [modal, setModal] = useState<boolean>();
   const [dataInfo, setDataInfo] = useState<IdataCard>();
+  const [audit, setAudit] = useState<IdataAudit>();
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
   const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested']);
   const { addToast } = useToasts();
@@ -92,12 +95,53 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
   }
 
 
+  async function handleAudit(data: IdataCard, action: string){
+    
+    let obj = {
+      createdAt: "2021-05-28T23:00:02.790Z",
+      type: "card-status-change",
+      before: {
+        createdAt: "2013-12-14T11:23:05.635Z",
+        id: data.id,
+        metadatas: {
+          name: data.metadatas.name,
+          digits: data.metadatas.digits
+        },
+        digits: 4405,
+        name: data.metadatas.name,
+        status: data.status,
+        updatedAt: null,
+        user_id: data.id
+      },
+      after: {
+        createdAt: "2020-12-14T11:23:05.635Z",
+        id: data.id,
+        metadatas: {
+          name: data.metadatas.name,
+          digits: data.metadatas.digits
+        },
+        digits: data.metadatas.digits,
+        name: data.metadatas.name,
+        status: action,
+        updatedAt: "2021-12-14T11:23:05.635Z",
+        user_id: data.id
+      },
+      requestedBy: 11112
+    }
+
+    const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
+
+  }
+
   async function handleCardRequest(action: string) {
     try {
       if (dataInfo) {
         let actionMsg = action == "approved" ? "aprovado" : "recusado"
         dataInfo.status = action
+        // Gerencia de cartão
         const res = await Axios.put(ajaxUrl.cards.manage + "/" + dataInfo.id, dataInfo)
+        // Auditoria
+        handleAudit(dataInfo, action)
         addToast("Cartão " + actionMsg + " com sucesso!", { appearance: 'success' });
         getCards()
         setModal(false)
