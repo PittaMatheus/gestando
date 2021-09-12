@@ -24,3 +24,6 @@
 
 8. Adicionando lib axios
   yarn add axios
+
+9.  Lib de notificações
+  yarn add react-toast-notifications

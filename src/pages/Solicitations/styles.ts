@@ -10,43 +10,48 @@ export const MenuTeste = styled.div`
   margin-top: 15px;
   /* width: 10%; */
 
-  > button {
+  .button-back{
+    width: 10%;
     background-color: ${props => props.theme.colors.info};
   }
 
 
-
   * {
   box-sizing: border-box;
-}
+  }
 
 .page-contain {
   display: flex;
-  min-height: 100vh;
-  align-items: center;
+  /* min-height: 100vh; */
+  /* align-items: center; */
   justify-content: center;
   background:${props => props.theme.colors.primary};
   /* border: .25em solid ${props => props.theme.colors.white}; */
-  padding: 2em;
+  /* padding: 2em; */
   font-family: 'Open Sans', sans-serif;
 }
 
 .data-card {
   display: flex;
   flex-direction: column;
-  max-width: 25.75em;
-  min-height: 25.75em;
+  /* height: 8%; */
+  width: 50%;
+  /* max-width: 25.75em; */
+  /* min-height: 15.75em; */
   overflow: hidden;
   border-radius: .5em;
   text-decoration: none;
-  background: ${props => props.theme.colors.secondary};
+  background: ${props => props.theme.colors.tertiary};
   margin: 1em;
   padding: 2.75em 2.5em;
   box-shadow: 0 1.5em 2.5em -.5em rgba(#000000, .1);
   transition: transform .45s ease, background .45s ease;
+  &:hover{
+      opacity: 0.7;
+    }
   
   h3 {
-    color: #2E3C40;
+    color: #FFFFFF;
     font-size: 3.5em;
     font-weight: 600;
     line-height: 1;
@@ -54,6 +59,7 @@ export const MenuTeste = styled.div`
     margin: 0 0 0.142857143em;
     border-bottom: 2px solid #753BBD;
     transition: color .45s ease, border .45s ease;
+    
   }
 
   h4 {
@@ -65,16 +71,21 @@ export const MenuTeste = styled.div`
     letter-spacing: 0.1em;
     margin: 0 0 1.777777778em;
     transition: color .45s ease;
+
   }
 
   p {
-    opacity: 0;
+    /* opacity: 0.2; */
     color: #FFFFFF;
     font-weight: 600;
     line-height: 1.8;
     margin: 0 0 1.25em;
     transform: translateY(-1em);
-    transition: opacity .45s ease, transform .5s ease;
+    transition: transform .5s ease;
+  }
+
+  .action-button-approve {
+    background-color: ${props => props.theme.colors.success};
   }
 
   .link-text {
@@ -110,7 +121,7 @@ export const MenuTeste = styled.div`
     }
 
     p {
-      opacity: 1;
+      opacity: 0.5;
       transform: none;
     }
 

@@ -3,13 +3,14 @@ import React, { ButtonHTMLAttributes } from "react";
 import { Container } from './styles';
 
 // Interface recebe elementos de um input
-type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  isTest ? : boolean
+};
 
-const Button: React.FC<IButtonProps> = ({ children,  ...rest }) => {
+function Button ({ isTest,  ...props }: IButtonProps) {
 
   return (
-    <Container {...rest }>
-      {children}
+    <Container {...props }>
     </Container>
   );
 }

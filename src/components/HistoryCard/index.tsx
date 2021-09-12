@@ -11,26 +11,31 @@ interface IHistoryCardProps {
   subtitle: Date;
   amount: string;
   buttonAction?: Boolean;
-  onClick?: React.MouseEventHandler
+  callBackClick?: Function;
 }
 
 const HistoryFinanceCard: React.FC<IHistoryCardProps> = ({
-  tagColor, title, subtitle, amount, buttonAction, onClick
+  id, tagColor, title, subtitle, amount, buttonAction, callBackClick
 }) => {
 
+  const onClick = () => {
+    if (callBackClick) {
+      callBackClick(id);
+    }
+  }
 
   return (
-      <Container>
-        <Tag color={tagColor} />
-        <div>
-          <span>{title}</span>
-          <small>{subtitle}</small>
-        </div>
-        <h3>{amount}</h3>
-        {buttonAction &&
-          <div><Button onClick={onClick}>Gerenciar</Button></div>
-        }
-      </Container>
+    <Container>
+      <Tag color={tagColor} />
+      <div>
+        <span>{title}</span>
+        <small>{subtitle}</small>
+      </div>
+      <h3>{amount}</h3>
+      {buttonAction &&
+        <div><Button onClick={() => onClick()}>Gerenciar</Button></div>
+      }
+    </Container>
 
   );
 }
