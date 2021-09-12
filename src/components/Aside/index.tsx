@@ -34,11 +34,11 @@ const Aside: React.FC = () => {
           <MdPersonPin />
           Usuários
         </MenuItemLink>
-        <MenuItemLink href="/list/cards">
+        <MenuItemLink href="/cards">
           <MdPayment />
           Cartões
         </MenuItemLink>
-        <MenuItemLink href="/list/exit-balance">
+        <MenuItemLink href="/audit">
           <MdFindInPage />
           Auditoria
         </MenuItemLink>

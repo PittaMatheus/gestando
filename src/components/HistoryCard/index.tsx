@@ -2,6 +2,10 @@ import React from "react";
 import Button from "../Button";
 
 
+import {
+  MdArrowForward
+} from 'react-icons/md';
+
 import { Container, Tag } from './styles'
 
 interface IHistoryCardProps {
@@ -12,10 +16,15 @@ interface IHistoryCardProps {
   amount: string;
   buttonAction?: Boolean;
   callBackClick?: Function;
+  actionBefore?: string;
+  actionAfter?: string;
+
+
 }
 
 const HistoryFinanceCard: React.FC<IHistoryCardProps> = ({
-  id, tagColor, title, subtitle, amount, buttonAction, callBackClick
+  id, tagColor, title, subtitle,
+  amount, buttonAction, callBackClick, actionAfter, actionBefore
 }) => {
 
   const onClick = () => {
@@ -29,6 +38,7 @@ const HistoryFinanceCard: React.FC<IHistoryCardProps> = ({
       <Tag color={tagColor} />
       <div>
         <span>{title}</span>
+        {actionBefore && <div>{actionBefore} <MdArrowForward /> {actionAfter}</div>}
         <small>{subtitle}</small>
       </div>
       <h3>{amount}</h3>

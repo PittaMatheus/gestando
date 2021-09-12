@@ -9,5 +9,8 @@ export const ajaxUrl = {
   },
   "users": {
     get: getBaseUrl() + "/api/users"
+  },
+  "audits": {
+    get: getBaseUrl() + "/api/audits"
   }
 }

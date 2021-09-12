@@ -32,7 +32,7 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   const [data, setData] = useState<IdataCard[]>();
   const [dataOriginal, setDataOriginal] = useState<IdataCard[]>();
-  const [selectedStatus, setSelectedStatus] = useState<string[]>(['requested', 'approved', 'refused']);
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(['approved', 'refused']);
 
   useEffect(() => {
     getCards()
@@ -136,15 +136,6 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
           onClick={() => handleFilter('refused')}
         >
           Recusados
-        </button>
-        <button
-          type="button"
-          className={`tag-filter tag-filter-requested
-          ${selectedStatus.includes('requested') && 'tag-actived'}
-          `}
-          onClick={() => handleFilter('requested')}
-        >
-          Pendentes
         </button>
       </Filters>
 
