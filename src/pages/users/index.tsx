@@ -1,8 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Axios from 'axios'
 
-import { Container, Content, Filters } from './styles';
+import { Container, Content } from './styles';
 import ContentHeader from '../../components/contentHeader';
 import HistoryCard from '../../components/HistoryCard';
 import FindInput from '../../components/FindInput';
@@ -11,15 +11,6 @@ import formatCurrency from '../../utils/formatCurrency';
 import formatDate from '../../utils/formatDate';
 
 import { ajaxUrl } from "../../utils/config/ajaxPaths";
-
-
-interface IRouteParams {
-  match: {
-    params: {
-      type: string;
-    }
-  }
-}
 
 
 interface IdataUser {
@@ -47,11 +38,7 @@ interface IdataUser {
   id: number,
 }
 
-interface IFilter {
-  filter: string,
-}
-
-const Users: React.FC<IRouteParams> = ({ match }) => {
+const Users: React.FC = () => {
 
   const [data, setData] = useState<IdataUser[]>();
   const [dataOriginal, setDataOriginal] = useState<IdataUser[]>();
@@ -124,7 +111,6 @@ const Users: React.FC<IRouteParams> = ({ match }) => {
       <ContentHeader title={"Usuários"} lineColor={"#F7943B"} >
         <FindInput onChange={findUsers} placeholder="Pesquisar"></FindInput>
       </ContentHeader>
-
       <Content>
 
         {data && data.map(item => (

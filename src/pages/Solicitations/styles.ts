@@ -28,7 +28,7 @@ export const FormTitle = styled.h1`
 
 `;
 
-export const MenuTeste = styled.div`
+export const ManageMenu = styled.div`
   align-content: left;
   margin-top: 15px;
   /* width: 10%; */

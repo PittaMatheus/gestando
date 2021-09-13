@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Axios from 'axios'
 
@@ -11,8 +11,6 @@ import formatCurrency from '../../utils/formatCurrency';
 
 import IdataCard from '../../Interfaces/IDataCard'
 
-import SelectInput from '../../components/SelectInput';
-
 interface IRouteParams {
   match: {
     params: {
@@ -21,12 +19,6 @@ interface IRouteParams {
   }
 }
 
-
-
-interface ITagColor {
-  status: string,
-  color: string
-}
 
 const Cards: React.FC<IRouteParams> = ({ match }) => {
 
@@ -40,14 +32,11 @@ const Cards: React.FC<IRouteParams> = ({ match }) => {
 
   const processColor = (status: string) => {
     let color = {
-      requested: '#F7943B',
       refused: "#E44C4E",
       approved: "#03BB85"
 
     }
-    let colorProcessed
-    if (status === 'requested')
-      colorProcessed = color.requested
+    let colorProcessed;
     if (status === 'refused')
       colorProcessed = color.refused
     if (status === 'approved')

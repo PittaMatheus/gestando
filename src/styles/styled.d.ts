@@ -11,14 +11,13 @@ declare module 'styled-components' {
       primary: string,
       secondary: string,
       tertiary: string,
-  
+      success: string,
+      info: string,
+      warning: string
       white: string,
       black: string,
       gray: string,
   
-      success: string,
-      info: string,
-      warning: string
     }
   };
 }

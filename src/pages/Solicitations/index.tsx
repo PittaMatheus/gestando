@@ -9,7 +9,7 @@ import {
 } from 'react-icons/md';
 
 
-import { Container, Content, MenuTeste, Form, FormTitle } from './styles';
+import { Container, Content, ManageMenu, Form, FormTitle } from './styles';
 import ContentHeader from '../../components/contentHeader';
 
 import HistoryCard from '../../components/HistoryCard';
@@ -150,7 +150,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         updatedAt: updateDate,
         user_id: data.id
       },
-      requestedBy: 11112 // Nao entendi esse parametro :(
+      requestedBy: 11112 // Não consegui implementar essa funcionalidade a tempo :/      
     }
 
     const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
@@ -221,12 +221,11 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         digits: Number(digits),
         limit: Number(limit),
       },
-      tagColor: "teste"
+      tagColor: "#F7931B"
     }
 
     try {
       const res = await Axios.post(ajaxUrl.cards.manage, newCard)
-      console.log(res)
       let id_card = res.data.id
       addToast("Pedido criado com sucesso!", { appearance: 'success' });
       getCards();
@@ -269,7 +268,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         updatedAt: null,
         user_id: data.id
       },
-      requestedBy: 11112 // Nao entendi esse parametro :(
+      requestedBy: 11112 // Não consegui implementar essa funcionalidade a tempo :/
     }
 
     const res2 = await Axios.post(ajaxUrl.audits.manage, obj)
@@ -288,7 +287,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
         }
       </ContentHeader>
       <Content>
-        <MenuTeste>
+        <ManageMenu>
           {modal && !modalCreateRequest &&
             <>
               <Button className="button-back" onClick={backToList}><MdKeyboardBackspace /></Button>
@@ -357,7 +356,7 @@ const Solicitations: React.FC<IRouteParams> = ({ match }) => {
             </>
           }
 
-        </MenuTeste>
+        </ManageMenu>
         {data && !modal && !modalCreateRequest && data.map(item => (
           <HistoryCard
             callBackClick={showDetailItem}
