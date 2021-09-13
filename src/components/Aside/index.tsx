@@ -28,7 +28,7 @@ const Aside: React.FC = () => {
     <Container>
       <Header>
         <LogImg src={logoImg} alt="Logo do app" />
-        <Title>Meu app</Title>
+        <Title>Gestando</Title>
       </Header>
       <MenuContainer>
         <MenuItemLink>
