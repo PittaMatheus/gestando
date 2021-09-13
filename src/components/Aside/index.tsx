@@ -10,6 +10,7 @@ import {
 
 import logoImg from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
+import { Link } from 'react-router-dom';
 
 import {
   Container,
@@ -30,21 +31,21 @@ const Aside: React.FC = () => {
         <Title>Meu app</Title>
       </Header>
       <MenuContainer>
-        <MenuItemLink href="/users">
+        <MenuItemLink>
           <MdPersonPin />
-          Usuários
+          <Link className="class-link" to="/users">Usuarios</Link>
         </MenuItemLink>
-        <MenuItemLink href="/cards">
+        <MenuItemLink>
           <MdPayment />
-          Cartões
+          <Link className="class-link" to="/cards">Cartões</Link>
         </MenuItemLink>
-        <MenuItemLink href="/audit">
+        <MenuItemLink >
           <MdFindInPage />
-          Auditoria
+          <Link className="class-link" to="/audit">Auditoria</Link>
         </MenuItemLink>
         <MenuItemLink href="/solicitations">
           <MdDescription />
-          Pedidos
+          <Link className="class-link" to="/solicitations">Pedidos</Link>
         </MenuItemLink>
         <MenuItemButton onClick={signOut} >
           <MdExitToApp />

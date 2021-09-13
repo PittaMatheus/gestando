@@ -38,7 +38,11 @@ export const MenuItemLink = styled.a`
   &:hover {
     opacity: .7;
   }
+  .class-link{
+    color: ${props => props.theme.colors.info};
+    text-decoration: none;
 
+  }
   > svg {
     font-size: 18px;
     margin-right: 5px;
