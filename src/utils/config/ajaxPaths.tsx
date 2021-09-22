@@ -4,17 +4,17 @@ function getBaseUrl() {
 
 export const ajaxUrl = {
   "cards": {
-    get: getBaseUrl() + "/api/cards",
-    manage: getBaseUrl() + "/api/cards"
+    get: getBaseUrl() + "/api/cards/",
+    manage: getBaseUrl() + "/api/cards/"
   },
   "users": {
-    get: getBaseUrl() + "/api/users"
+    get: getBaseUrl() + "/api/users/"
   },
   "audits": {
-    get: getBaseUrl() + "/api/audits",
-    manage: getBaseUrl() + "/api/audits"
+    get: getBaseUrl() + "/api/audits/",
+    manage: getBaseUrl() + "/api/audits/"
   },
   "analysts": {
-    get: getBaseUrl() + "/api/analysts"
+    get: getBaseUrl() + "/api/analysts/"
   }
 }
